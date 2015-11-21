@@ -1,0 +1,122 @@
+/*General Styles*/
+
+body {
+  text-align: center;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+div.clear {
+	clear: both;
+}
+
+ul {
+	list-style: none;
+}
+
+i.step-icon {
+	margin-top: 20px;
+	font-size: 3rem;
+	display: block;
+	color: #00b8e6;
+}
+
+/*Title Styles*/
+
+#title {
+	margin-top: 100px;
+}
+
+#title span {
+	color: #00b8e6;
+	font-size: 5rem;
+}
+
+#title span.highlight {
+	color: #5cb85c;
+	font-size: 5rem;
+	font-weight: 500;
+}
+
+/*555 ccc*/
+
+/*--------------------------------------------------*/
+
+/*Search Box*/
+
+#search-box {
+	margin-top: 10px;
+}
+
+#search-box button:hover {
+	background-color: #fff;
+	color: #00b8e6;
+	border-color: #ccc;
+}
+
+
+/*--------------------------------------------------*/
+
+/* Refinement Panel */
+
+#refinement-box {
+	margin-top: 10px;
+}
+
+
+#refinement-box ul.column {
+	max-width: 100%;
+	margin: 20px auto;
+}
+
+#refinement-box ul.float {
+	float: left;
+	width: 48%;
+	margin: 20px 1%;
+}
+
+#refinement-box li {
+	margin-top: 5px;
+}
+
+#refinement-box label, 
+#refinement-box select {
+	width: 50%;
+	display: inline;
+}
+
+#refinement-box label {
+	font-weight: 200;
+	color: #555;
+}
+
+
+/*----------------------------------------------------*/
+
+
+/*Results Box*/
+
+#results-box {
+	margin-top: 30px;
+}
+
+
+#results-box span {
+	font-size: 2rem;
+	margin: 0 10px;
+}
+
+#results-box span.minor {
+	background-color: #fff;
+	color: #555;
+	font-weight: 200;
+	margin: 0 3px;
+}
+
+#results-box i {
+	color: #00b8e6;
+	font-weight: 400;
+	font-size: 1.8rem;
+}
+
+
