@@ -2,22 +2,30 @@ var koa = require('koa');
 var route = require('koa-route');
 var app = module.exports = koa();
 
-app.use(route.get('/features/:searchTerm', getFeatures));  
-app.use(route.get('/price/:searchTerm', getPrice));
+app.use(route.get('/features', getFeatures));
+app.use(route.get('/price', getPrice));
 
-function *getFeatures(searchTerm) {
-	var res = {searchTerm: searchTerm, features: { feature1: {options: []}, feature2: {options: []} }};
+
+function *getFeatures() {
+	var params = JSON.parse(this.request.query.params);
+	var searchTerm = params.searchTerm;
+
+	var res = {features: { feature1: {options: []}, feature2: {options: []} }};
 	console.log(res);
 	this.body = res;
 }
 
-function *getPrice(searchTerm) {
-	var res = {searchTerm: searchTerm, price: 10};
+function *getPrice() {
+	var params = JSON.parse(this.request.query.params);
+	var searchTerm = params.searchTerm;
+	var featureChoices = params.features;
+
+	var res = {prices: {lower: 10, median: 15, upper: 20}};
 	console.log(res);
 	this.body = res;
 }
 
-function *getSearchSuggestions(term) {
+function *getSearchSuggestions() {
 	var res = {suggestions: ['a', 'b', 'c']};
 	console.log(res);
 	this.body = res;
