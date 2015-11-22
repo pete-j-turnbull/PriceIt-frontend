@@ -21,6 +21,10 @@ i.step-icon {
 	color: #00b8e6;
 }
 
+#error-box {
+	display: none;
+}
+
 /*Title Styles*/
 
 #title {
@@ -45,7 +49,7 @@ i.step-icon {
 /*Search Box*/
 
 #search-box {
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 #search-box button:hover {
@@ -57,37 +61,38 @@ i.step-icon {
 
 /*--------------------------------------------------*/
 
-/* Refinement Panel */
+/* Features Panel */
 
-#refinement-box {
+#features-box {
 	margin-top: 10px;
+	margin-right: 50px;
 }
 
 
-#refinement-box ul.column {
+#features-box ul.column {
 	max-width: 100%;
 	margin: 20px auto;
 }
 
-#refinement-box ul.float {
-	float: left;
-	width: 48%;
-	margin: 20px 1%;
-}
-
-#refinement-box li {
+#features-box li {
 	margin-top: 5px;
 }
 
-#refinement-box label, 
-#refinement-box select {
+#features-box label, 
+#features-box select {
 	width: 50%;
 	display: inline;
 }
 
-#refinement-box label {
+#features-box label {
 	font-weight: 200;
 	color: #555;
+	margin-right: 10px;
+}
+
+#features-box li.float {
+	float: left;
+	width: 50%;
 }
 
 
@@ -97,13 +102,15 @@ i.step-icon {
 /*Results Box*/
 
 #results-box {
-	margin-top: 30px;
+	margin-top: 40px;
 }
 
 
 #results-box span {
 	font-size: 2rem;
+	font-weight: 400;
 	margin: 0 10px;
+	padding: 6px 16px;
 }
 
 #results-box span.minor {
@@ -118,5 +125,29 @@ i.step-icon {
 	font-weight: 400;
 	font-size: 1.8rem;
 }
+
+
+/*Responsive Styles*/
+
+@media (max-width: 800px) {
+
+	#results-box i {
+		display: none;
+	}
+
+	#results-box span {
+		display: block;
+	}
+
+	body {
+		max-width: 80%;
+	}
+
+}
+
+
+
+
+
 
 

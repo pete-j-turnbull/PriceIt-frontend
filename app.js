@@ -44,11 +44,4 @@ function *getSearchSuggestions() {
 }
 
 
-/*app.get('/book/:title', function(req, res) {
-  title = decodeURI(req.params.title);
-  book.find({title: title}, function(error, book) {
-    res.send(book);
-  });
-});*/
-
 if (!module.parent) app.listen(config.port);

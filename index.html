@@ -3,12 +3,15 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="./ui.js"></script>
+		<script src="./main.js"></script>
 	</head>
 	<body>
-		<div>
+		<div id="upper-page">
 			<div id="title">
 				<span>Price it</span><span class="highlight">!</span>
 			</div>
@@ -18,63 +21,20 @@
         			<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
       			</span>
 			</div>
-			<!-- <i class="glyphicon glyphicon-circle-arrow-down step-icon"></i> -->
-			<div id="refinement-box">
-				<ul class="list-group column float">
-					<li>
-						<label>Property 1</label>
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</li>
-					<li>
-						<label>Property 2</label>
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</li>
+			<div id="error-box"class="alert alert-danger" role="alert"></div>
+		</div>
+		<div id="lower-page">
+			<div id="features-box">
+				<ul class="list-group column">
 				</ul>
-
-				<ul class="list-group column float">
-					<li>
-						<label>Property 3</label>
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</li>
-					<li>
-						<label>Property 4</label>
-						<select class="form-control">
-							<option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-					</li>
-				</ul>
-
-				<div class="clear"></div>
 			</div>
-			<!-- <i class="glyphicon glyphicon-circle-arrow-down step-icon"></i> -->
+			<div id="progress"></div>
 			<div id="results-box">
-				<span class="label label-default minor">£300.00</span>
+				<span class="label label-default minor"></span>
 				<i class="glyphicon glyphicon-menu-left"></i>
-				<span class="label label-success">£305.00</span>
+				<span class="label label-success"></span>
 				<i class="glyphicon glyphicon-menu-right"></i>
-				<span class="label label-default minor">£310.00</span>
+				<span class="label label-default minor"></span>
 			</div>
 		</div>
 	</body>
