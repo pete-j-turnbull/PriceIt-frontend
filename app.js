@@ -5,13 +5,27 @@ var koa = require('koa');
 var route = require('koa-route');
 var cors = require('koa-cors');
 
+var zerorpc = require('zerorpc');
+var client = new zerorpc.Client();
+client.connect(config.zerorpc.connect);
+
 var app = module.exports = koa();
 app.use(cors());
 
 app.use(route.get('/features', getFeatures));
 app.use(route.get('/price', getPrice));
 app.use(route.get('/', main));
+app.use(route.get('ui.js', uijs));
+app.use(route.get('main.js', mainjs));
 
+function *mainjs() {
+	this.body = yield fs.readFile('./main.js', {encoding: 'utf8'});
+	log.info(this.body);
+}
+function *uijs() {
+	this.body = yield fs.readFile('./ui.js', {encoding: 'utf8'});
+	log.info(this.body);
+}
 
 function *main() {
 	this.body = yield fs.readFile('./index.html', {encoding: 'utf8'});
@@ -45,3 +59,12 @@ function *getSearchSuggestions() {
 
 
 if (!module.parent) app.listen(config.port);
+
+
+
+
+/*
+client.invoke('job', {action: 'getFeatures', params: {}}, function(e, response, more) {
+	log.info(response.result);
+});
+*/
