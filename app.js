@@ -27,7 +27,6 @@ function *getFeatures() {
 	var searchTerm = params.searchTerm;
 
 	var res = {features: { feature1: {options: ['option1', 'option2']}, feature2: {options: ['option1', 'option2']} }};
-	log.info(res);
 	this.body = res;
 }
 
@@ -37,13 +36,11 @@ function *getPrice() {
 	var featureChoices = params.features;
 
 	var res = {prices: {lower: 10, median: 15, upper: 20}};
-	log.info(res);
 	this.body = res;
 }
 
 function *getSearchSuggestions() {
 	var res = {suggestions: ['a', 'b', 'c']};
-	log.info(res);
 	this.body = res;
 }
 
