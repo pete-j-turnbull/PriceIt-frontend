@@ -43,10 +43,10 @@ function *getPrice() {
 	var params = JSON.parse(this.request.query.params);
 	log.debug(params);
 	var searchTerm = params.searchTerm;
-	var featureChoices = params.features;
+	var features = params.features;
 
-	var res = {prices: {lower: 10, median: 15, upper: 20}};
-	this.body = res;
+	var response = yield jobHandler.invoke({action: 'getPrices', params: {searchTerm: searchTerm, features: features}})
+	this.body = response;
 }
 
 function *getSearchSuggestions() {
