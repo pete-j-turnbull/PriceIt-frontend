@@ -10,6 +10,7 @@ var ui = {
 			if(!this.errorHidden){
 				this.toggleError('');
 			}
+			
 			var form = {searchTerm: search_term};
 			callApi(api_search, form, this.processResults);
 		}
@@ -30,9 +31,6 @@ var ui = {
 		var form = this.buildForm();
 		console.log(form);
 		callApi(api_features, form, this.updatePrice)
-	},
-	returnDefaults: function(){
-		//Clear properties to defaults
 	},
 	processResults: function(data){
 		console.log(' - processResults called');
@@ -94,9 +92,10 @@ var ui = {
 		}
 		return form;
 	},
-	toggleResults: function(callback){
+	toggleResults: function(){
 		if(this.resultsHidden){
-			$('#lower-page').fadeIn('fast', callback);
+			$('#lower-page').show();
+			animate('#lower-page', 'zoomInUp');
 			this.resultsHidden = false;
 		}
 		else {
@@ -121,7 +120,6 @@ var ui = {
 			this.errorHidden = false;
 		}
 		else {
-			//$('#error-box').hide();
 			$('#error-box').hide();
 			this.errorHidden = true;
 		}

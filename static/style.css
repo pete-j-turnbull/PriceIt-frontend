@@ -21,10 +21,47 @@ i.step-icon {
 	color: #00b8e6;
 }
 
+#lower-page {
+	-webkit-animation-duration: 1s;
+	-webkit-animation-delay: 0s;
+}
+
 #error-box {
 	display: none;
 	margin-top: 5px;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-delay: 0s;
 }
+
+
+
+/*Suggested Box Sytles*/
+
+#suggested-box {
+	display: none;
+	margin-top: 2px;
+	text-align: left;
+	border: solid #ccc 1px;
+	border-radius: 5px;
+	/*padding-top: 5px;
+	padding-bottom: 3px;*/
+	margin-right: 50px;
+}
+
+#suggested-box p {
+	margin: 0;
+	padding: 2px 0;
+	font-size: 18px;
+	color: #ccc;
+	padding-left: 15px;
+}
+
+
+#suggested-box p.selected {
+	background-color: #f2f2f2;
+	color: #555;
+}
+
 
 /*Title Styles*/
 
