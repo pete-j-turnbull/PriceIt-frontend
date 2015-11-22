@@ -7,15 +7,21 @@ var cors = require('koa-cors');
 var serve = require('koa-static-server');
 var koaLogger = require('./utilities/koa-logger');
 
+// Connection to worker
+var jobHandler = require('./utilities/jobHandler');
+
+// App config
 var app = module.exports = koa();
 app.use(cors());
 app.use(koaLogger());
-
 app.use(serve({rootDir: 'static', rootPath: '/static'}));
 
+// Routes
 app.use(route.get('/', main))
 app.use(route.get('/features', getFeatures));
 app.use(route.get('/price', getPrice));
+app.use(route.get('/suggestions', getSearchSuggestions));
+
 
 
 function *main() {
@@ -24,7 +30,11 @@ function *main() {
 
 function *getFeatures() {
 	var params = JSON.parse(this.request.query.params);
+	log.debug(params);
 	var searchTerm = params.searchTerm;
+
+	var response = yield jobHandler.invoke({action: 'getFeatures', params: {}});
+	log.info(response);
 
 	var res = {features: { feature1: {options: ['option1', 'option2']}, feature2: {options: ['option1', 'option2']} }};
 	this.body = res;
@@ -32,6 +42,7 @@ function *getFeatures() {
 
 function *getPrice() {
 	var params = JSON.parse(this.request.query.params);
+	log.debug(params);
 	var searchTerm = params.searchTerm;
 	var featureChoices = params.features;
 
@@ -40,21 +51,12 @@ function *getPrice() {
 }
 
 function *getSearchSuggestions() {
-	var res = {suggestions: ['a', 'b', 'c']};
-	this.body = res;
+	var params = JSON.parse(this.request.query.params);
+	var searchTerm = params.searchTerm;
+	var response = yield jobHandler.invoke({action: 'autoSuggest', params: {searchTerm: searchTerm}})
+	this.body = response;
 }
 
 
 if (!module.parent) app.listen(config.port);
 
-
-
-/*
-var zerorpc = require('zerorpc');
-var client = new zerorpc.Client();
-client.connect(config.zerorpc.connect);
-
-client.invoke('job', {action: 'getFeatures', params: {}}, function(e, response, more) {
-	log.info(response.result);
-});
-*/

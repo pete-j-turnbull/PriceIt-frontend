@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/pete-j-turnbull/react-application",
   "dependencies": {
+    "bluebird": "^3.0.5",
     "co-fs": "^1.2.0",
     "debug": "^2.2.0",
     "koa": "^1.0.0",
