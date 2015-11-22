@@ -19,6 +19,7 @@
   "dependencies": {
     "co-fs": "^1.2.0",
     "koa": "^1.0.0",
+    "koa-cors": "0.0.16",
     "koa-route": "^1.0.2"
   }
 }
