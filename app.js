@@ -5,10 +5,12 @@ var koa = require('koa');
 var route = require('koa-route');
 var cors = require('koa-cors');
 var serve = require('koa-static-server');
-
+var koaLogger = require('./utilities/koa-logger');
 
 var app = module.exports = koa();
 app.use(cors());
+app.use(koaLogger());
+
 app.use(serve({rootDir: 'static', rootPath: '/static'}));
 
 app.use(route.get('/', main))
@@ -17,12 +19,10 @@ app.use(route.get('/price', getPrice));
 
 
 function *main() {
-	log.debug(this.request);
 	this.body = yield fs.readFile('./static/index.html', {encoding: 'utf8'})
 }
 
 function *getFeatures() {
-	
 	var params = JSON.parse(this.request.query.params);
 	var searchTerm = params.searchTerm;
 
@@ -32,7 +32,6 @@ function *getFeatures() {
 }
 
 function *getPrice() {
-	log.debug(this.request);
 	var params = JSON.parse(this.request.query.params);
 	var searchTerm = params.searchTerm;
 	var featureChoices = params.features;
@@ -53,11 +52,11 @@ if (!module.parent) app.listen(config.port);
 
 
 
+/*
 var zerorpc = require('zerorpc');
 var client = new zerorpc.Client();
 client.connect(config.zerorpc.connect);
 
-/*
 client.invoke('job', {action: 'getFeatures', params: {}}, function(e, response, more) {
 	log.info(response.result);
 });
