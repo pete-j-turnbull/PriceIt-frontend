@@ -1,80 +1,47 @@
+var fs = require('co-fs');
+var config = require('./config/config');
+var log = require('./utilities/logger');
+var koa = require('koa');
+var route = require('koa-route');
+var cors = require('koa-cors');
 
-//initialise page
+var app = module.exports = koa();
+app.use(cors());
 
-var api_search = "http://178.62.70.112/features?params=";
-var api_features = "http://178.62.70.112/price?params=";
+app.use(route.get('/features', getFeatures));
+app.use(route.get('/price', getPrice));
+app.use(route.get('/', main));
 
-function callApi(url, obj, callback){
-	var queryString = url + encodeURIComponent(JSON.stringify(obj));
-	$.get(queryString, callback);
+
+function *main() {
+	this.body = yield fs.readFile('./index.html', {encoding: 'utf8'});
+	log.info(this.body);
+}
+
+function *getFeatures() {
+	var params = JSON.parse(this.request.query.params);
+	var searchTerm = params.searchTerm;
+
+	var res = {features: { feature1: {options: []}, feature2: {options: []} }};
+	log.info(res);
+	this.body = res;
+}
+
+function *getPrice() {
+	var params = JSON.parse(this.request.query.params);
+	var searchTerm = params.searchTerm;
+	var featureChoices = params.features;
+
+	var res = {prices: {lower: 10, median: 15, upper: 20}};
+	log.info(res);
+	this.body = res;
+}
+
+function *getSearchSuggestions() {
+	var res = {suggestions: ['a', 'b', 'c']};
+	log.info(res);
+	this.body = res;
 }
 
 
-$(document).ready(function(){
-	//ui.togglePrice();
-	ui.toggleResults();
-
-	//Bind event handlers
-	$('#search-box button').click(function(){
-		ui.search.call(ui);
-	});
-	$('#features-box select').change(function(){
-		ui.refine.call(ui);
-	});
-
-	$("#search-box input").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#search-box button").click();
-    }
-});
-
-	
-});
-
-var features = {
-		prop1: {options: ['opt1', 'opt2', 'opt3']},
-		prop2: {options: ['opt1', 'opt2', 'opt3']},
-		prop3: {options: ['opt1', 'opt2', 'opt3']}
-};
-
-
-var price = {
-	prices: {
-		lower: 325,
-		median: 370,
-		upper: 393
-	}
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-//Jquery Loading Wheel
-
-var $loading = $('#loadingDiv').hide();
-$(document).ajaxStart(function () {
-	$loading.show();
-})
-.ajaxStop(function () {
-	$loading.hide();
-});
-
-*/
+if (!module.parent) app.listen(config.port);
