@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder "/Users/pete/.ssh", "/home/vagrant/.ssh"
   config.vm.synced_folder "/Users/pete/triptease/vagrant/react-application", "/home/vagrant/react-application"
-
+  config.vm.synced_folder "/Users/pete/triptease/vagrant/ebay-scrapers", "/home/vagrant/ebay-scrapers"
   
 
   config.vm.provider "virtualbox" do |vb|

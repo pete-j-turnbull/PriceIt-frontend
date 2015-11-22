@@ -23,7 +23,6 @@ app.use(route.get('/price', getPrice));
 app.use(route.get('/suggestions', getSearchSuggestions));
 
 
-
 function *main() {
 	this.body = yield fs.readFile('./static/index.html', {encoding: 'utf8'})
 }
@@ -52,6 +51,7 @@ function *getPrice() {
 
 function *getSearchSuggestions() {
 	var params = JSON.parse(this.request.query.params);
+	log.debug(params);
 	var searchTerm = params.searchTerm;
 	var response = yield jobHandler.invoke({action: 'autoSuggest', params: {searchTerm: searchTerm}})
 	this.body = response;
