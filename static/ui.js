@@ -2,20 +2,33 @@
 
 var ui = {
 	resultsHidden: false,
-	errorHidden: false,
+	errorHidden: true,
 	search: function(){
 		console.log(' - search called');
 		var search_term = $('#search-box input').val();
 		if(search_term){
+			if(!this.errorHidden){
+				this.toggleError('');
+			}
 			var form = {searchTerm: search_term};
 			callApi(api_search, form, this.processResults);
 		}
 		else {
-			alert("Please enter a value into the search box!");
+			if(this.errorHidden){
+				this.toggleError("Please enter a value into the search box!");
+			}
+			else {
+				var className = 'animated shake';
+				$('#error-box').addClass(className).one(animationEnd, function(){
+					$(this).removeClass(className);
+				});
+			}
 		}
 	},
 	refine: function(){
+		console.log(' - refine called');
 		var form = this.buildForm();
+		console.log(form);
 		callApi(api_features, form, this.updatePrice)
 	},
 	returnDefaults: function(){
@@ -25,18 +38,21 @@ var ui = {
 		console.log(' - processResults called');
 		console.log(data);
 		window.ui.updateFeatures(data.features);
-		//window.ui.updatePrice(data.prices);
+		window.ui.bindFeatureHandler();
+		window.ui.refine();
 		if(window.ui.resultsHidden){
 			window.ui.toggleResults();
 		}
 	},
-	updatePrice: function(prices){
-		console.log(prices);
-		$('#results-box span')[0].innerText = "£" + prices.lower;
-		$('#results-box span')[1].innerText = "£" + prices.median.toString();
-		$('#results-box span')[2].innerText = "£" + prices.upper.toString();
+	updatePrice: function(obj){
+		console.log(' - updatePrice called');
+		console.log(obj.prices);
+		$('#results-box span')[0].innerText = "£" + obj.prices.lower;
+		$('#results-box span')[1].innerText = "£" + obj.prices.median;
+		$('#results-box span')[2].innerText = "£" + obj.prices.upper;
 	},
 	updateFeatures: function(features){
+		console.log(' - updateFeatures called');
 		var keys    = Object.keys(features);
 		var classes = "";
 		var featureHtml = '';
@@ -86,6 +102,28 @@ var ui = {
 		else {
 			$('#lower-page').hide();
 			this.resultsHidden = true;
+		}
+	},
+	bindFeatureHandler: function(){
+		$('#features-box select').change(function(){
+			animate('#results-box', 'pulse');
+			window.ui.refine.call(ui);
+		});
+	},
+	toggleError: function(errorMessage){
+		if(this.errorHidden){
+			if(!this.resultsHidden){
+				this.toggleResults();
+			}
+			$('#error-box').html(errorMessage);
+			$('#error-box').show();
+			animate('#error-box', 'bounceIn');
+			this.errorHidden = false;
+		}
+		else {
+			//$('#error-box').hide();
+			$('#error-box').hide();
+			this.errorHidden = true;
 		}
 	}
 };	
