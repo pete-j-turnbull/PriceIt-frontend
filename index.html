@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+		<link rel="stylesheet" href="animate.min.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="./ui.js"></script>
@@ -12,16 +13,16 @@
 	</head>
 	<body>
 		<div id="upper-page">
-			<div id="title">
+			<div id="title" class="animated bounceInDown">
 				<span>Price it</span><span class="highlight">!</span>
 			</div>
-			<div id="search-box" class="input-group-lg input-group">
+			<div id="search-box" class="input-group-lg input-group animated fadeIn">
 				<input type="text" class="form-control" placeholder="Search for..."></input>
 				<span class="input-group-btn">
         			<button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
       			</span>
 			</div>
-			<div id="error-box"class="alert alert-danger" role="alert"></div>
+			<div id="error-box" class="alert alert-danger" role="alert"></div>
 		</div>
 		<div id="lower-page">
 			<div id="features-box">

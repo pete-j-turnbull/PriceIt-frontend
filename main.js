@@ -1,6 +1,6 @@
 
 //initialise page
-
+var animationEnd = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
 var api_search = "http://178.62.70.112/features?params=";
 var api_features = "http://178.62.70.112/price?params=";
 
@@ -9,9 +9,28 @@ function callApi(url, obj, callback){
 	$.get(queryString, callback);
 }
 
+function bindAnimate(targetElement, animation, element, eventType){
+	if(eventType == 'click'){
+		$(element).click(function(){
+			animate(targetElement, animation);
+		});
+	}
+	else {
+		$(element).change(function(){
+			animate(targetElement, animation);
+		});
+	}
+}
+
+function animate(targetElement, animation){
+	var className = "animated " + animation
+	$(targetElement).addClass(className).one(animationEnd, function(){
+		$(this).removeClass(className);
+	});
+}
+
 
 $(document).ready(function(){
-	//ui.togglePrice();
 	ui.toggleResults();
 
 	//Bind event handlers
@@ -22,30 +41,14 @@ $(document).ready(function(){
 		ui.refine.call(ui);
 	});
 
+	//Bind keyup event handler to search box
 	$("#search-box input").keyup(function(event){
-    if(event.keyCode == 13){
-        $("#search-box button").click();
-    }
+		if(event.keyCode == 13){
+			$("#search-box button").click();
+		}
+	});
+
 });
-
-	
-});
-
-var features = {
-		prop1: {options: ['opt1', 'opt2', 'opt3']},
-		prop2: {options: ['opt1', 'opt2', 'opt3']},
-		prop3: {options: ['opt1', 'opt2', 'opt3']}
-};
-
-
-var price = {
-	prices: {
-		lower: 325,
-		median: 370,
-		upper: 393
-	}
-};
-
 
 
 

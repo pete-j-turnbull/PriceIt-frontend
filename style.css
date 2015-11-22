@@ -23,6 +23,7 @@ i.step-icon {
 
 #error-box {
 	display: none;
+	margin-top: 5px;
 }
 
 /*Title Styles*/
@@ -103,6 +104,8 @@ i.step-icon {
 
 #results-box {
 	margin-top: 40px;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-delay: 0s;
 }
 
 
@@ -136,13 +139,12 @@ i.step-icon {
 	}
 
 	#results-box span {
-		display: block;
+		/*display: block;*/
 	}
 
 	body {
 		max-width: 80%;
 	}
-
 }
 
 
