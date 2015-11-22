@@ -22,6 +22,7 @@
     "koa": "^1.0.0",
     "koa-cors": "0.0.16",
     "koa-route": "^1.0.2",
+    "koa-static-server": "^0.1.8",
     "zerorpc": "^0.9.6"
   }
 }
