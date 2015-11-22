@@ -1,10 +1,16 @@
+var fs = require('co-fs');
 var koa = require('koa');
 var route = require('koa-route');
 var app = module.exports = koa();
 
 app.use(route.get('/features', getFeatures));
 app.use(route.get('/price', getPrice));
+app.use(route.get('/', main));
 
+
+function *main() {
+	this.body = yield fs.readFile('./index.html');
+}
 
 function *getFeatures() {
 	var params = JSON.parse(this.request.query.params);
