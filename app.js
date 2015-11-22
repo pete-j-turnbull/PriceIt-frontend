@@ -22,7 +22,7 @@ function *getFeatures() {
 	var params = JSON.parse(this.request.query.params);
 	var searchTerm = params.searchTerm;
 
-	var res = {features: { feature1: {options: []}, feature2: {options: []} }};
+	var res = {features: { feature1: {options: ['option1', 'option2']}, feature2: {options: ['option1', 'option2']} }};
 	log.info(res);
 	this.body = res;
 }

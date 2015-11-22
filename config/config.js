@@ -1,5 +1,5 @@
-var env  = (process.env.ENV || 'development'),
-    conf = require('./' + env);
+var env  = (process.env.ENV || 'development');
+var conf = require('./' + env);
 
 conf.envName = env;
 
