@@ -1,6 +1,6 @@
 module.exports = {
     logger: {
-        enabled: ['debug', 'info', 'warn', 'error']
+        enabled: ['info', 'warn', 'error']
     },
     port: 80,
     zerorpc: {

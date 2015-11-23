@@ -12,6 +12,7 @@ var jobHandler = require('./utilities/jobHandler');
 
 // App config
 var app = module.exports = koa();
+log.info('Serving on port: ' + config.port);
 app.use(cors());
 app.use(koaLogger());
 app.use(serve({rootDir: 'static', rootPath: '/static'}));
