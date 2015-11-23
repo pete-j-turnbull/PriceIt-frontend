@@ -1,8 +1,8 @@
 
 //initialise page
 var animationEnd = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
-var api_search = "http://178.62.70.112/features?params=";
-var api_features = "http://178.62.70.112/price?params=";
+var api_search = "/features?params=";
+var api_features = "/price?params=";
 
 function callApi(url, obj, callback){
 	var queryString = url + encodeURIComponent(JSON.stringify(obj));
