@@ -1,9 +1,9 @@
 var config = require('../config/config');
-//var zerorpc = require('zerorpc');
+var zerorpc = require('zerorpc');
 var Promise = require('bluebird');
 
-//var client = new zerorpc.Client();
-//client.connect(config.zerorpc.connect);
+var client = new zerorpc.Client();
+client.connect(config.zerorpc.connect);
 
 
 module.exports.invoke = function *(msgObj) {
