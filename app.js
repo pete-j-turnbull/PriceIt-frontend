@@ -34,10 +34,7 @@ function *getFeatures() {
 	var searchTerm = params.searchTerm;
 
 	var response = yield jobHandler.invoke({action: 'getFeatures', params: {}});
-	log.info(response);
-
-	var res = {features: { feature1: {options: ['option1', 'option2']}, feature2: {options: ['option1', 'option2']} }};
-	this.body = res;
+	this.body = response;
 }
 
 function *getPrice() {
