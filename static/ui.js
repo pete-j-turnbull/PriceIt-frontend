@@ -3,6 +3,68 @@
 var ui = {
 	resultsHidden: false,
 	errorHidden: true,
+	autoSuggestControl: {
+		hidden: true,
+		currentSuggestion: null,
+		highlight: function(node){
+			$('#suggested-box p').removeClass('selected');
+			$(node).addClass('selected');
+		},
+		navigate: function(event){
+
+			var direction = ui.autoSuggestControl.getDirection(event);
+			
+			if(direction == 'up'){
+				var current = $('p.selected')[0];
+				if(current){
+					var next = $(current).prev()[0];
+					ui.autoSuggestControl.highlight(next);
+				}
+			}
+			else if (direction == 'down'){
+				var current = $('p.selected')[0];
+				if(current){
+					var next = $(current).next()[0];
+					if(next){
+						ui.autoSuggestControl.highlight(next);
+					}
+				}
+				else {
+					var next = $('#suggested-box p')[0];
+					if(next){
+						ui.autoSuggestControl.highlight(next);
+					}
+				}
+			}
+		},
+		toggleSuggestions: function(){
+			if(this.hidden){
+				$('#suggested-box').show();
+				this.hidden = false;
+			}
+			else {
+				$('#suggested-box').hide();
+				this.hidden = true;
+			}
+		},
+		hover: function(event){
+			ui.autoSuggestControl.highlight(event.target);
+		},
+		getDirection: function(event){
+			if(event.keyCode == 40){
+				return 'down';
+			}
+			else if(event.keyCode == 38){
+				return 'up';
+			}
+		},
+		getSuggestions: function(){
+			//
+		},
+		buildList: function(suggestions){
+
+		}
+	},
 	search: function(){
 		console.log(' - search called');
 		var search_term = $('#search-box input').val();
@@ -10,7 +72,7 @@ var ui = {
 			if(!this.errorHidden){
 				this.toggleError('');
 			}
-			
+
 			var form = {searchTerm: search_term};
 			callApi(api_search, form, this.processResults);
 		}
@@ -38,16 +100,16 @@ var ui = {
 		window.ui.updateFeatures(data.features);
 		window.ui.bindFeatureHandler();
 		window.ui.refine();
-		if(window.ui.resultsHidden){
-			window.ui.toggleResults();
-		}
 	},
 	updatePrice: function(obj){
 		console.log(' - updatePrice called');
 		console.log(obj.prices);
-		$('#results-box span')[0].innerText = "£" + obj.prices.lower;
-		$('#results-box span')[1].innerText = "£" + obj.prices.median;
-		$('#results-box span')[2].innerText = "£" + obj.prices.upper;
+		$('#results-box span')[0].innerText = obj.prices.lower;
+		$('#results-box span')[1].innerText = obj.prices.median;
+		$('#results-box span')[2].innerText = obj.prices.upper;
+		if(window.ui.resultsHidden){
+			window.ui.toggleResults();
+		}
 	},
 	updateFeatures: function(features){
 		console.log(' - updateFeatures called');
