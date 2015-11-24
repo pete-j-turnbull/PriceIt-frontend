@@ -6,7 +6,10 @@ var api_features = "/price?params=";
 
 function callApi(url, obj, callback){
 	var queryString = url + encodeURIComponent(JSON.stringify(obj));
-	$.get(queryString, callback);
+	$.get(queryString, function(jsonData) {
+		var data = JSON.parse(jsonData);
+		callback(data);
+	});
 }
 
 function bindAnimate(targetElement, animation, element, eventType){

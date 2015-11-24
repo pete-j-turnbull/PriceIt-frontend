@@ -34,7 +34,7 @@ function *getFeatures() {
 	var searchTerm = params.searchTerm;
 
 	var response = yield jobHandler.invoke({action: 'getFeatures', params: {}});
-	this.body = response;
+	this.body = JSON.stringify(response);
 }
 
 function *getPrice() {
@@ -44,7 +44,7 @@ function *getPrice() {
 	var features = params.features;
 
 	var response = yield jobHandler.invoke({action: 'getPrices', params: {searchTerm: searchTerm, features: features}})
-	this.body = response;
+	this.body = JSON.stringify(response);
 }
 
 function *getSearchSuggestions() {
@@ -52,7 +52,7 @@ function *getSearchSuggestions() {
 	log.debug(params);
 	var searchTerm = params.searchTerm;
 	var response = yield jobHandler.invoke({action: 'autoSuggest', params: {searchTerm: searchTerm}})
-	this.body = response;
+	this.body = JSON.stringify(response)
 }
 
 
