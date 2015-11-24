@@ -8,15 +8,9 @@ var Promise = require('bluebird');
 
 module.exports.invoke = function *(msgObj) {
 	return new Promise(function (resolve, reject) {
-<<<<<<< Updated upstream
 		client.invoke('job', msgObj, function(e, response, more) {
 			resolve(JSON.parse(response));
 		});
-=======
-		//client.invoke('job', msgObj, function(e, response, more) {
-			resolve(null);
-		//});
->>>>>>> Stashed changes
 	});
 	
 }
