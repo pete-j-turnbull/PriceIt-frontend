@@ -33,7 +33,7 @@ function *getFeatures() {
 	log.debug(params);
 	var searchTerm = params.searchTerm;
 
-	var response = yield jobHandler.invoke({action: 'getFeatures', params: {}});
+	var response = yield jobHandler.invoke({action: 'getFeatures', params: {searchTerm: searchTerm}});
 	this.body = JSON.stringify(response);
 }
 
