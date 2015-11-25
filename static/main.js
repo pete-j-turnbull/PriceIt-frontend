@@ -37,8 +37,8 @@ function animate(targetElement, animation){
 
 $(document).ready(function(){
 	ui.toggleResults();
-	ui.autoSuggestControl.toggleSuggestions();
-	
+	//ui.autoSuggestControl.toggleSuggestions();
+
 	//Bind event handlers
 	$('#search-box button').click(function(){
 		ui.search.call(ui);
