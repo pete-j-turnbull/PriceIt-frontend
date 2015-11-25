@@ -157,10 +157,12 @@ var ui = {
 		form.features = {};
 
 		var list_items = $('#features-box li');
+		console.log(list_items.length);
 		for(i=0, len=list_items.length; i<len; i++){
 			var feature = $(list_items[i]).find('label').text();
 			var option  = $(list_items[i]).find('select').val();
-			if(option > 0){
+			console.log('got feature ' + feature + ' with value of ' + option);
+			if(option != "none"){
 				form.features[feature] = option;
 			}
 		}
