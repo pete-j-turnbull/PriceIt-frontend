@@ -3,6 +3,8 @@
 var animationEnd = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
 var api_search = "http://178.62.70.112/features?params=";
 var api_features = "http://178.62.70.112/price?params=";
+var api_suggest = "http://178.62.70.112/suggestions?params=";
+
 
 function callApi(url, obj, callback){
 	var queryString = url + encodeURIComponent(JSON.stringify(obj));
@@ -35,7 +37,8 @@ function animate(targetElement, animation){
 
 $(document).ready(function(){
 	ui.toggleResults();
-
+	ui.autoSuggestControl.toggleSuggestions();
+	
 	//Bind event handlers
 	$('#search-box button').click(function(){
 		ui.search.call(ui);

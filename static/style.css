@@ -2,8 +2,8 @@
 
 body {
   text-align: center;
-  max-width: 50%;
   margin: 0 auto;
+  max-width: 90%;
 }
 
 div.clear {
@@ -66,7 +66,7 @@ i.step-icon {
 /*Title Styles*/
 
 #title {
-	margin-top: 100px;
+	margin-top: 30px;
 }
 
 #title span {
@@ -103,7 +103,6 @@ i.step-icon {
 
 #features-box {
 	margin-top: 10px;
-	margin-right: 50px;
 }
 
 
@@ -113,24 +112,27 @@ i.step-icon {
 }
 
 #features-box li {
-	margin-top: 5px;
-}
-
-#features-box label, 
-#features-box select {
-	width: 50%;
-	display: inline;
-}
-
-#features-box label {
-	font-weight: 200;
-	color: #555;
-	margin-right: 10px;
+	margin-top: 10px;
+	text-align: left;
 }
 
 #features-box li.float {
 	float: left;
-	width: 50%;
+	width: 45%;
+	margin-right: 5%;
+}
+
+
+#features-box label {
+	/*font-weight: 200;*/
+	color: #555;
+	font-size: 1.5rem;
+	font-weight: 300;
+}
+
+#features-box select {
+	font-size: 1.5rem;
+	font-weight: 100;
 }
 
 
@@ -156,37 +158,63 @@ i.step-icon {
 #results-box span.minor {
 	background-color: #fff;
 	color: #555;
-	font-weight: 200;
+	font-weight: 100;
 	margin: 0 3px;
 }
 
 #results-box i {
+	
 	color: #00b8e6;
 	font-weight: 400;
 	font-size: 1.8rem;
 }
 
+/*------------------------------------------------*/
 
 /*Responsive Styles*/
 
-@media (max-width: 800px) {
+/*@media (max-width: 800px) {
 
 	#results-box i {
 		display: none;
 	}
 
 	#results-box span {
-		/*display: block;*/
+
 	}
 
 	body {
 		max-width: 80%;
 	}
+}*/
+
+
+
+@media (min-width: 800px) {
+	body {
+		max-width: 70%;
+	}
+
+	#title {
+		margin-top: 50px;
+	}
+
+	#results-box {
+		margin-top: 45px;
+	}
 }
 
+@media (min-width: 1100px) {
+	body {
+		max-width: 50%;
+	}
 
+	#title {
+		margin-top: 80px;
+	}
 
-
-
-
+	#results-box {
+		margin-top: 50px;
+	}
+}
 

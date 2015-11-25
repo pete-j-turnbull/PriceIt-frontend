@@ -40,10 +40,16 @@ var ui = {
 		toggleSuggestions: function(){
 			if(this.hidden){
 				$('#suggested-box').show();
+				if(!ui.resultsHidden){
+					ui.toggleResults();
+				}
 				this.hidden = false;
 			}
 			else {
 				$('#suggested-box').hide();
+				if(ui.resultsHidden){
+					ui.toggleResults("fast");
+				}
 				this.hidden = true;
 			}
 		},
@@ -72,9 +78,13 @@ var ui = {
 			if(!this.errorHidden){
 				this.toggleError('');
 			}
+			if(!this.autoSuggestControl.hidden){
+				this.autoSuggestControl.toggleSuggestions();
+			}
 
 			var form = {searchTerm: search_term};
 			callApi(api_search, form, this.processResults);
+
 		}
 		else {
 			if(this.errorHidden){
@@ -104,9 +114,11 @@ var ui = {
 	updatePrice: function(obj){
 		console.log(' - updatePrice called');
 		console.log(obj.prices);
-		$('#results-box span')[0].innerText = obj.prices.lower;
-		$('#results-box span')[1].innerText = obj.prices.median;
-		$('#results-box span')[2].innerText = obj.prices.upper;
+
+		//Build html string for results
+		var html = '<span class="label label-default minor">' + "£" + obj.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.prices.upper + '</span>';
+		$('#results-box').html(html);
+	
 		if(window.ui.resultsHidden){
 			window.ui.toggleResults();
 		}
@@ -154,10 +166,15 @@ var ui = {
 		}
 		return form;
 	},
-	toggleResults: function(){
+	toggleResults: function(speed){
 		if(this.resultsHidden){
-			$('#lower-page').show();
-			animate('#lower-page', 'zoomInUp');
+			if(speed == "fast"){
+				$('#lower-page').show();
+			}
+			else {
+				$('#lower-page').show();
+				animate('#lower-page', 'zoomInUp');
+			}
 			this.resultsHidden = false;
 		}
 		else {
