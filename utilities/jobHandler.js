@@ -3,8 +3,7 @@ var zerorpc = require('zerorpc');
 var Promise = require('bluebird');
 
 var client = new zerorpc.Client();
-client.connect(config.zerorpc.connect);
-
+client.connect('tcp://127.0.0.1:4242');
 
 module.exports.invoke = function *(msgObj) {
 	return new Promise(function (resolve, reject) {
