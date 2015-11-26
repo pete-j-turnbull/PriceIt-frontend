@@ -73,8 +73,9 @@ var ui = {
 			//call api with {searchTerm: ‘’}	
 		},
 		buildList: function(data){
+			console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
 			if(data.suggestions){
-				console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
+				
 				var html = ""
 
 				for (var i = 0; i < data.suggestions.length; i++) {
@@ -87,8 +88,16 @@ var ui = {
 				//populate suggestions div
 				document.getElementById('suggested-box').innerHTML = html;
 
+				//if suggested-box is hidden show
+				if(window.ui.autoSuggestControl.hidden){
+					window.ui.autoSuggestControl.toggleSuggestions();
+				}
+
 				//bind event handlers
 				window.ui.autoSuggestControl.bindEvents();
+			}
+			else{
+				console.log(' - did not not recieve any suggestions');
 			}
 		},
 		suggestionEventHandler: function(event){
@@ -103,9 +112,6 @@ var ui = {
 		typeAheadEventHandler: function(event){
 			//the event that fires on each keypress within the searchbox
 			console.log('type ahead called...');
-			if(window.ui.autoSuggestControl.hidden){
-				window.ui.autoSuggestControl.toggleSuggestions();
-			}
 
 			var searchText = $('#search-box input').val();
 			if(searchText != window.ui.autoSuggestControl.lastSubmittedSearch){
