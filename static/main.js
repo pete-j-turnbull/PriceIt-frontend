@@ -1,10 +1,9 @@
 
 //initialise page
 var animationEnd = "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend";
-var api_search = "http://178.62.70.112/features?params=";
-var api_features = "http://178.62.70.112/price?params=";
-var api_suggest = "http://178.62.70.112/suggestions?params=";
-
+var api_search = "/features?params=";
+var api_features = "/price?params=";
+var api_suggest = "/suggestions?params=";
 
 function callApi(url, obj, callback){
 	console.log('callAPI called...');
@@ -13,7 +12,11 @@ function callApi(url, obj, callback){
 	$.get(queryString, function(jsonData) {
 		var data = JSON.parse(jsonData);
 		console.log(data);
+<<<<<<< HEAD
 		callback(data);
+=======
+		callback(data.result);
+>>>>>>> e821f1d1ef7343ae439ce431b2bb2810084fe09e
 	});
 }
 
@@ -69,15 +72,4 @@ $(document).ready(function(){
 
 
 });
-
-
-
-
-
-
-
-
-
-
-
 
