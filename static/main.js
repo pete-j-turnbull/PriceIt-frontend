@@ -7,6 +7,8 @@ var api_suggest = "/suggestions?params=";
 
 
 function callApi(url, obj, callback){
+	console.log('callAPI called...');
+	console.log(obj);
 	var queryString = url + encodeURIComponent(JSON.stringify(obj));
 	$.get(queryString, function(jsonData) {
 		var data = JSON.parse(jsonData);
@@ -36,13 +38,17 @@ function animate(targetElement, animation){
 
 
 $(document).ready(function(){
-	ui.toggleResults();
+
+	ui.toggleLower();
+	ui.toggleLoading();
 	//ui.autoSuggestControl.toggleSuggestions();
 
-	//Bind event handlers
+	//Bind event handler Search button
 	$('#search-box button').click(function(){
 		ui.search.call(ui);
 	});
+
+	//Bind event handler feature boxs
 	$('#features-box select').change(function(){
 		ui.refine.call(ui);
 	});
@@ -55,8 +61,10 @@ $(document).ready(function(){
 	});
 
 
-	$("#search-box input").keyup(ui.autoSuggestControl.navigate);
+	$("#search-box input").keyup(ui.autoSuggestControl.navigate, ui.autoSuggestControl.typeAheadEventHandler);
 	$("#suggested-box p").hover(ui.autoSuggestControl.hover);
+	$("#suggested-box p").click(ui.autoSuggestControl.suggestionEventHandler);
+
 
 
 });
