@@ -75,6 +75,7 @@ var ui = {
 		buildList: function(data){
 			if(data.suggestions){
 				console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
+				console.log(data);
 				var html = ""
 
 				for (var i = 0; i < data.suggestions.length; i++) {
@@ -165,13 +166,13 @@ var ui = {
 	processResults: function(data){
 		console.log(' - processResults called');
 		console.log(data);
-		window.ui.updateFeatures(data.result.features);
+		window.ui.updateFeatures(data.features);
 		window.ui.bindFeatureHandler();
 		//window.ui.refine();
 	},
 	updatePrice: function(obj){
 		console.log(' - updatePrice called');
-		console.log(obj.result.prices);
+		console.log(obj.prices);
 
 		//Build html string for results
 		var html = '<span class="label label-default minor">' + "£" + obj.result.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.result.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.result.prices.upper + '</span>';

@@ -11,7 +11,8 @@ function callApi(url, obj, callback){
 	var queryString = url + encodeURIComponent(JSON.stringify(obj));
 	$.get(queryString, function(jsonData) {
 		var data = JSON.parse(jsonData);
-		callback(data);
+		console.log(data);
+		callback(data.result);
 	});
 }
 
