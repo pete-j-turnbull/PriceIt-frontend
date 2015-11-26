@@ -84,6 +84,7 @@ var ui = {
 
 			var form = {searchTerm: search_term};
 			callApi(api_search, form, this.processResults);
+			window.ui.refine();
 
 		}
 		else {
@@ -107,16 +108,16 @@ var ui = {
 	processResults: function(data){
 		console.log(' - processResults called');
 		console.log(data);
-		window.ui.updateFeatures(data.features);
+		window.ui.updateFeatures(data.result.features);
 		window.ui.bindFeatureHandler();
-		window.ui.refine();
+		//window.ui.refine();
 	},
 	updatePrice: function(obj){
 		console.log(' - updatePrice called');
-		console.log(obj.prices);
+		console.log(obj.result.prices);
 
 		//Build html string for results
-		var html = '<span class="label label-default minor">' + "£" + obj.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.prices.upper + '</span>';
+		var html = '<span class="label label-default minor">' + "£" + obj.result.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.result.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.result.prices.upper + '</span>';
 		$('#results-box').html(html);
 	
 		if(window.ui.resultsHidden){
