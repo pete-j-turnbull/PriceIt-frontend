@@ -75,12 +75,8 @@ var ui = {
 		buildList: function(data){
 			console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
 			if(data.suggestions){
-<<<<<<< HEAD
-				
-=======
 				console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
 				console.log(data);
->>>>>>> e821f1d1ef7343ae439ce431b2bb2810084fe09e
 				var html = ""
 
 				for (var i = 0; i < data.suggestions.length; i++) {
@@ -305,31 +301,6 @@ var ui = {
 		}
 	}
 };	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
