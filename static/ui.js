@@ -175,7 +175,7 @@ var ui = {
 		console.log(obj.prices);
 
 		//Build html string for results
-		var html = '<span class="label label-default minor">' + "£" + obj.result.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.result.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.result.prices.upper + '</span>';
+		var html = '<span class="label label-default minor">' + "£" + obj.prices.lower + '</span><i class="glyphicon glyphicon-menu-left"></i><span class="label label-success">' + "£" + obj.prices.median + '</span><i class="glyphicon glyphicon-menu-right"></i><span class="label label-default minor">' + "£" + obj.prices.upper + '</span>';
 		console.log(' - setting inner html of results box... ' + html);
 		$('#results-box').html(html);
 		console.log(' - set html.');
