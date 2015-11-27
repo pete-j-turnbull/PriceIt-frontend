@@ -7,20 +7,22 @@ var ui = {
 	autoSuggestControl: {
 		hidden: true,
 		currentSuggestion: null,
-		lastSubmittedSearch: null,
+		lastSubmittedSearch: '',
 		highlight: function(node){
 			$('#suggested-box p').removeClass('selected');
 			$(node).addClass('selected');
 		},
 		navigate: function(event){
-
+			console.log('navigate called');
 			var direction = ui.autoSuggestControl.getDirection(event);
 			
+			console.log('direction: ' + direction);
+
 			if(direction == 'up'){
 				var current = $('p.selected')[0];
 				if(current){
 					var next = $(current).prev()[0];
-					ui.autoSuggestControl.highlight(next);
+					window.ui.autoSuggestControl.highlight(next);
 				}
 			}
 			else if (direction == 'down'){
@@ -28,18 +30,19 @@ var ui = {
 				if(current){
 					var next = $(current).next()[0];
 					if(next){
-						ui.autoSuggestControl.highlight(next);
+						window.ui.autoSuggestControl.highlight(next);
 					}
 				}
 				else {
 					var next = $('#suggested-box p')[0];
 					if(next){
-						ui.autoSuggestControl.highlight(next);
+						window.ui.autoSuggestControl.highlight(next);
 					}
 				}
 			}
 		},
 		toggleSuggestions: function(){
+			console.log('toggleSuggestions called..');
 			if(this.hidden){
 				$('#suggested-box').show();
 				if(!ui.resultsHidden){
@@ -67,14 +70,9 @@ var ui = {
 				return 'up';
 			}
 		},
-		getSuggestions: function(searchText){
-			//get current search box value
-			var searchText = $('#search-box input').val();
-			//call api with {searchTerm: ‘’}	
-		},
 		buildList: function(data){
 			console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
-			if(data.suggestions){
+			if(data.suggestions != ""){
 				console.log(' - build list called, recieved suggestions... ' + data.suggestions.length);
 				console.log(data);
 				var html = ""
@@ -99,48 +97,82 @@ var ui = {
 			}
 			else{
 				console.log(' - did not not recieve any suggestions');
+				if(!window.ui.autoSuggestControl.hidden){
+					window.ui.autoSuggestControl.toggleSuggestions();
+				}
 			}
 		},
-		suggestionEventHandler: function(event){
+		suggestionEventHandler: function(){
+			
 			var suggestionText = $(this).text();
-
-			//the event that fires when a suggestions is clicked or highlighted
 			console.log('suggestion selected... ' + suggestionText);
+
+			//Update lastSubmittedSearch property
+			window.ui.autoSuggestControl.lastSubmittedSearch = suggestionText;
+
+			//Remove select class from all suggestions
+			$('#suggested-box p').removeClass('selected');
 
 			//update search box value with suggestion
 			$('#search-box input').val(suggestionText);
+
+			//hide the suggestions box
+			if(!window.ui.autoSuggestControl.hidden){
+				window.ui.autoSuggestControl.toggleSuggestions();
+			}
+
+			//Refocus cursor on search-box
+			$('#search-box input').focus();
 		},
 		typeAheadEventHandler: function(event){
-			//the event that fires on each keypress within the searchbox
+			//the event that fires on each keypress within the searchbox. It compares search terms and rquests suggestions.
 			console.log('type ahead called...');
 
 			var searchText = $('#search-box input').val();
+			console.log('search text: ' + searchText);
 			if(searchText != window.ui.autoSuggestControl.lastSubmittedSearch){
-				window.ui.autoSuggestControl.lastSubmittedSearch = searchText;
-				callApi(api_suggest, {searchTerm: searchText}, window.ui.autoSuggestControl.buildList);
+				if(searchText != ""){
+
+					//If error shown, hide.
+					if(!ui.errorHidden){
+						ui.toggleError();
+					}
+
+					window.ui.autoSuggestControl.lastSubmittedSearch = searchText;
+					callApi(api_suggest, {searchTerm: searchText}, window.ui.autoSuggestControl.buildList);
+				}
+				else { //Nothing in search box.. Hide suggestions if visable
+					if(!window.ui.autoSuggestControl.hidden){
+						window.ui.autoSuggestControl.toggleSuggestions();
+					}
+				}
 			}
 		},
 		bindEvents: function(){
-			//$("#search-box input").keyup(window.ui.autoSuggestControl.navigate, ui.autoSuggestControl.typeAheadEventHandler);
 			$("#suggested-box p").hover(window.ui.autoSuggestControl.hover);
 			$("#suggested-box p").click(window.ui.autoSuggestControl.suggestionEventHandler);
 		}
 	},
 	search: function(){
 		console.log(' - search called');
+
+		//Empty any contents from lower-page (features-box and results-box)
+		this.empty('#features-box');
+		this.empty('#results-box');
+
 		var search_term = $('#search-box input').val();
 		if(search_term){
 			
+			//Remove firstLoad class to remove Search Bar margin-top
+			$('#upper-page').removeClass('firstLoad');
+
 			if(!this.errorHidden){
 				this.toggleError('');
 			}
 			if(!this.autoSuggestControl.hidden){
+				console.log('ASC hidden = false. hiding...');
 				this.autoSuggestControl.toggleSuggestions();
 			}
-			
-			//Empty any contents from lower-page (features-box and results-box)
-			this.empty('#features-box');
-			this.empty('#results-box');
 
 			if(window.ui.loadingHidden){
 				window.ui.toggleLoading();
@@ -174,7 +206,6 @@ var ui = {
 		console.log(data);
 		window.ui.updateFeatures(data.features);
 		window.ui.bindFeatureHandler();
-		//window.ui.refine();
 	},
 	updatePrice: function(obj){
 		console.log(' - updatePrice called');
@@ -202,7 +233,7 @@ var ui = {
 		var keys    = Object.keys(features);
 		var classes = "";
 		var featureHtml = '<ul class="list-group column">';
-		if(keys.length > 5){
+		if(keys.length > 0){
 			classes += "float";
 		}
 
@@ -248,6 +279,39 @@ var ui = {
 			window.ui.toggleLoading();
 			window.ui.refine.call(ui);
 		});
+	},
+	initializeSearch: function(){
+		//first run on page load. bind event handlers to search box components.
+		
+		//Bind search button click to call ui.search method
+		$('#search-box button').click(function(){
+			window.ui.search.call(ui);
+		});
+
+		//Bind return key event to trigger click event on search button.
+		$("#search-box input").keyup(function(event){
+			if(event.keyCode == 13){
+
+				//If Suggestion highlighted update search box with suggestion
+				var suggestion = $('p.selected')[0];
+				if(suggestion){
+					ui.autoSuggestControl.suggestionEventHandler.call(suggestion);
+				}
+
+				$("#search-box button").click();			
+			}
+			else if (event.keyCode == 27) {
+				if(!ui.autoSuggestControl.hidden){
+					ui.autoSuggestControl.toggleSuggestions();
+				}
+			};
+		});
+
+		//bind event handler for both key up and down events plus every change to search text
+		$("#search-box input").keyup(ui.autoSuggestControl.navigate).keyup(ui.autoSuggestControl.typeAheadEventHandler);
+
+		//bind event handler to body element of page to hide suggestions if shown
+		$('html').click(window.ui.blankSpaceClick);
 	},
 	toggleError: function(errorMessage){
 		if(this.errorHidden){
@@ -296,8 +360,8 @@ var ui = {
 	},
 	blankSpaceClick: function(){
 		//used to attempt to hide Suggestions when user clicks on blank space
-		if(!this.autoSuggestControl.hidden){
-			this.autoSuggestControl.toggleSuggestions();
+		if(!window.ui.autoSuggestControl.hidden){
+			window.ui.autoSuggestControl.toggleSuggestions();
 		}
 	}
 };	

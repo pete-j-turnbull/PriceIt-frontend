@@ -16,19 +16,6 @@ function callApi(url, obj, callback){
 	});
 }
 
-function bindAnimate(targetElement, animation, element, eventType){
-	if(eventType == 'click'){
-		$(element).click(function(){
-			animate(targetElement, animation);
-		});
-	}
-	else {
-		$(element).change(function(){
-			animate(targetElement, animation);
-		});
-	}
-}
-
 function animate(targetElement, animation){
 	var className = "animated " + animation
 	$(targetElement).addClass(className).one(animationEnd, function(){
@@ -39,31 +26,20 @@ function animate(targetElement, animation){
 
 $(document).ready(function(){
 
+	//Hide lowerpage & loading animation
 	ui.toggleLower();
 	ui.toggleLoading();
-	//ui.autoSuggestControl.toggleSuggestions();
+	
+	//bind relevant event handlers to search-box components.
+	ui.initializeSearch();
 
-	//Bind event handler Search button
-	$('#search-box button').click(function(){
-		ui.search.call(ui);
+	//bind event handlers to autoSuggestControl
+	ui.autoSuggestControl.bindEvents();
+
+	//prevent white space click from being triggered from search-box
+	$('#search-box').click(function(event){
+		event.stopPropagation();
 	});
-
-	//Bind event handler feature boxs
-	$('#features-box select').change(function(){
-		ui.refine.call(ui);
-	});
-
-	//Bind keyup event handler to search box
-	$("#search-box input").keyup(function(event){
-		if(event.keyCode == 13){
-			$("#search-box button").click();
-		}
-	});
-
-
-	$("#search-box input").keyup(ui.autoSuggestControl.navigate, ui.autoSuggestControl.typeAheadEventHandler);
-	$("#suggested-box p").hover(ui.autoSuggestControl.hover);
-	$("#suggested-box p").click(ui.autoSuggestControl.suggestionEventHandler);
 
 
 
