@@ -25,6 +25,6 @@
     "koa-route": "^1.0.2",
     "koa-static-server": "^0.1.8",
     "ms": "^0.7.1",
-    "zerorpc": "^0.9.6"
+    "jackrabbit": "~4.0.3"
   }
 }

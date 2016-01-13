@@ -1,18 +1,31 @@
 var config = require('../config/config');
-var zerorpc = require('zerorpc');
+var jackrabbit = require('jackrabbit');
 var Promise = require('bluebird');
+var log = require('./logger');
 
-var client = new zerorpc.Client();
-client.connect('tcp://127.0.0.1:4242');
 
-module.exports.invoke = function *(msgObj) {
+var rabbit = jackrabbit('amqp://guest:guest@127.0.0.1:5672/')
+    .on('connected', function () {
+        log.info('RabbitMQ connected');
+    })
+    .on('error', function (err) {
+        log.error('RabbitMQ ' + err);
+    })
+    .on('disconnected', function () {
+        log.error('RabbitMQ disconnected');
+    });
+var exchange = rabbit.default();
+var rpc = exchange.queue({ name: 'rpcQueue', prefetch: 1, durable: false });
+
+
+module.exports.invoke = function (action, params) {
     return new Promise(function (resolve, reject) {
-	client.invoke('job', msgObj, function(e, response, more) {
-            try {
-	        resolve(JSON.parse(response));
-	    } catch (err) {
-                reject({ success: false, result: err });
+        exchange.publish({ action: action, params: params }, {
+            key: 'rpcQueue',
+            reply: function (data) {
+                resolve(data);
             }
         });
     });
 };
+
